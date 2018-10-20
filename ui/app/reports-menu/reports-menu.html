@@ -1,0 +1,35 @@
+<md-list-item class="md-2-line nav-list-item" ng-click="rmCtrl.toggleReportsVisibility();rmCtrl.changeArrow()">
+  <md-icon class="md-avatar-icon material-icons">{{icon}}</md-icon>
+  <div class="md-list-item-text">
+    <h3> {{title}} </h3>
+  </div>
+
+  <md-button ng-if="rmCtrl.canEdit && editMode" ui-sref="edit-group({folder: folder})" class="md-icon-button md-accent" aria-label="Favorite">
+    <md-icon class="settings-folder-button">settings</md-icon>
+  </md-button>
+
+  <div ng-if="arrow===false">
+    <i class="fa fa-chevron-up menu-group-arrow" aria-hidden="true"></i>
+  </div>
+
+  <div ng-if="arrow===true">
+    <i class="fa fa-chevron-down menu-group-arrow" aria-hidden="true"></i>
+  </div>
+
+</md-list-item>
+
+<div ng-style="{  height : rmCtrl.containerHeight }" class="report-links-wrapper">
+
+  <md-list-item 
+    class="nav-list-item report-link" 
+    href="" 
+    ng-class="{'active-link' : rmCtrl.isCurrent(report)}"
+    ng-click="rmCtrl.getLinkUrl(report)"
+    ng-repeat="report in rmCtrl.reports ">
+      <div class="md-list-item-text md-offset">
+        <div class="menu-item-ellipsis" ng-bind-html="report.title | rawHtml">{{report.title}}</div>
+      </div>
+
+  </md-list-item>
+
+</div>

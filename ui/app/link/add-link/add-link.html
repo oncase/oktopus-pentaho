@@ -1,0 +1,32 @@
+<md-content layout="row" layout-align="space-around" layout-padding="layout-padding" ng-cloak="" class="login-form">
+  <md-card flex="flex">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2><span class="title-header">Link</span></h2>
+      </div>
+    </md-toolbar>
+    <md-card-content>
+      <form name="Form">
+
+        <md-input-container class="md-block">
+          <input type="text" name="title" ng-model="ctrl.linkForm.title" placeholder="Título" required="" />
+        </md-input-container>
+
+        <md-input-container class="md-block" ng-if="ctrl.linkForm.route=='artifact'">
+          <input type="text" name="linkUrl" ng-model="ctrl.linkForm.params.linkURL" placeholder="Link externo" required="" />
+
+        </md-input-container>
+
+        <md-input-container class="md-block">
+          <input type="text" name="route" ng-model="ctrl.linkForm.route" placeholder="Rota" required="" />
+        </md-input-container>
+
+        <div align="right">
+          <md-button ng-click="ctrl.cancel()">Cancelar</md-button>
+          <md-button ng-disabled="!Form.$valid" ng-click="ctrl.submit()" class="md-raised md-primary">Cadastrar</md-button>
+        </div>
+
+      </form>
+    </md-card-content>
+  </md-card>
+</md-content>

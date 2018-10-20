@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="portalApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="portalApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="portalApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="en" ng-app="portalApp" class="no-js">
+<!--<![endif]-->
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Oktopus</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Gerenciamento de roles e redirecionamentos -->
+  <script type="text/javascript" src="../../../plugin/oktopus/api/getroles" type="text/javascript"></script>
+  <script type="text/javascript" src="roles-init.js" type="text/javascript"></script>
+
+  <!-- Alterar modo de visão do admin -->
+  <script type="text/javascript" src="../../../plugin/oktopus/api/getEditMode" type="text/javascript"></script>
+
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+
+  <!-- html5-boilerplate -->
+  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
+  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
+
+  <!-- angular material -->
+  <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
+
+  <!-- material-icons -->
+  <link rel="stylesheet" href="bower_components/material-design-icons/iconfont/material-icons.css">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+
+  <!-- APP -->
+  <link rel="stylesheet" href="assets/css/app.css">
+
+
+</head>
+
+<body class="portal-body" layout="row" ng-controller="PortalController as portalCtrl" keypress-events>
+
+  
+  <!-- Hotjar Tracking Code for http://nzn.onca.se:8080/pentaho/login -->
+  <script>
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:816924,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+  </script>
+
+  <!--SIDENAV-->
+  <md-sidenav ng-show="showSidebar" class="site-sidenav " hide-print md-component-id="left" tabindex="-1" md-whiteframe="4"
+    hide-print md-is-locked-open="$mdMedia('min-width: 333px')" ng-cloak>
+
+
+    <md-toolbar class="nav-header md-hue-2" md-whiteframe="2">
+
+      <md-button class="text-center toolbar-height site-logo" ui-sref="home" ui-sref-active="active-link"></md-button>
+    </md-toolbar>
+
+    <md-content flex="" class="nav-content" role="navigation">
+      <md-list flex class="md-dense">
+        <reports-menu 
+          ng-repeat="(key, group) in portalCtrl.environment " 
+          ng-if="group.isAllowed || portalCtrl.canEdit" 
+          can-edit="{{portalCtrl.canEdit}}"
+          folder="{{key}}" 
+          roles="{{group.roles}}"
+          icon="{{group.icon}}" 
+          title="{{group.title}}" 
+          subtitle="Insights para ajudar a linha editorial"></reports-menu>
+      </md-list>
+    </md-content>
+
+    <md-button class="md-fab md-fab-bottom-right plus-folder-button" ui-sref="add-group" ui-sref-active="active-link" ng-if="portalCtrl.canEdit && editMode">
+      <md-icon md-font-icon="mdi mdi-check plus-folder-icon">create_new_folder</md-icon>
+    </md-button>
+  </md-sidenav>
+  <!--/SIDENAV-->
+
+  <div layout="column" tabindex="-1" role="main" flex="" class="site-content layout-column flex">
+    <md-toolbar class="site-content-toolbar toolbar-height" md-whiteframe="2" ng-cloak layout="row">
+        <md-icon ng-click="showSidebarMenu()" class="material-icons ng-scope menu-icon-toggle" role="img" aria-hidden="true">menu</md-icon>
+  
+        <div flex class="toolbar-height" ng-cloak="" layout="column" layout-align="center start">
+          <div layout="row" layout-align="start center">
+            <span>{{ portalCtrl.getCurrentTitle() }}</span>
+
+            <md-button aria-label="Share" class="md-icon-button no-margin-right no-margin-left" ng-click="shareLink(window.location.href)">
+              <md-icon class="fa fa-clone edit-icon"></md-icon>
+            </md-button>
+
+            <md-button aria-label="Edit" ng-if="editMode && portalCtrl.canEdit && shouldShowEditButtons()" class="md-icon-button no-margin-right no-margin-left" ui-sref="artifact.edit({id : portalCtrl.currentLink.id})">
+              <md-icon class="fa fa-pencil edit-icon"></md-icon>
+            </md-button>
+
+            <md-button aria-label="Delete" ng-if="editMode && portalCtrl.canEdit && shouldShowEditButtons()" class="md-icon-button no-margin-right no-margin-left" ng-click="confirmLinkDelete($event)">
+              <md-icon class="fa fa-trash-o edit-icon"></md-icon>
+            </md-button>
+
+          </div>
+        </div>
+        <md-menu>
+          <md-button aria-label="Menu" class="md-icon-button" ng-click="$mdMenu.open($event)">
+            <md-icon class="material-icons">more_vert</md-icon>
+          </md-button>
+          <md-menu-content width="4">
+  
+            <md-menu-item ng-show="{{portalCtrl.canEdit}}">
+              <md-button ng-click="portalCtrl.adm()">
+                <md-icon class="material-icons">settings</md-icon>
+                Administra&ccedil;&atilde;o
+              </md-button>
+            </md-menu-item>
+  
+            <md-menu-divider ng-show="{{portalCtrl.canEdit}}"></md-menu-divider>
+  
+            <md-menu-item ng-show="{{portalCtrl.canEdit}}">
+              <md-button>
+                <md-switch class="edit-switch" ng-model="editMode" ng-change="setEditMode(editMode)" aria-hidden=true>
+                  Modo de edi&ccedil;&atilde;o
+                </md-switch>
+              </md-button>
+            </md-menu-item>
+  
+            <md-menu-divider ng-show="{{portalCtrl.canEdit}}"></md-menu-divider>
+            <md-menu-item>
+              <md-button ng-click="portalCtrl.logout()">
+                <md-icon class="material-icons">exit_to_app</md-icon>
+                Sair
+              </md-button>
+            </md-menu-item>
+  
+          </md-menu-content>
+        </md-menu>
+  
+    </md-toolbar>
+  
+    <md-content md-scroll-y="" layout="column" flex="" class="main-content">
+      <div ui-view="" flex="noshrink" class="main-ng-view">
+      </div>
+      <div layout="row" flex="noshrink" layout-align="center center" class="layout-align-center-center layout-row flex-noshrink">
+        <div flex="" class="ng-binding flex license-footer">
+          Oktopus
+          <version-label></version-label> - Powered by NZN/ONCASE
+        </div>
+      </div>
+    </md-content>
+  
+  </div>
+
+</body>
+
+<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+
+<script type="text/javascript" src="loader.js" type="text/javascript"></script>
+
+<!-- Angular -->
+<script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+
+<!-- Angular Sanitize -->
+<script type="text/javascript" src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+
+<!-- Angular debounce -->
+<script type="text/javascript" src="bower_components/ng-debounce/angular-debounce.js"></script>
+
+<!-- Angular ngOrderObjectBy -->
+<script type="text/javascript" src="bower_components/angular-order-object-by/src/ng-order-object-by.js"></script>
+
+<!-- Angular UI Router -->
+<script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+
+<!-- Angular UUID4 -->
+<script type="text/javascript" src="bower_components/angular-uuid4/angular-uuid4.min.js"></script>
+
+<!-- Angular Material -->
+<script type="text/javascript" src="bower_components/angular-aria/angular-aria.min.js"></script>
+<script type="text/javascript" src="bower_components/angular-animate/angular-animate.min.js"></script>
+<script type="text/javascript" src="bower_components/angular-messages/angular-messages.min.js"></script>
+<script type="text/javascript" src="bower_components/angular-material/angular-material.min.js"></script>
+
+<script type="text/javascript" src="bower_components/moment/min/moment.min.js"></script>
+
+<!-- App -->
+<script type="text/javascript" src="app.js"></script>
+<script type="text/javascript" src="home/home.js"></script>
+<script type="text/javascript" src="platform-reports/platform-reports.js"></script>
+<script type="text/javascript" src="reports-menu/reports-menu.js"></script>
+<script type="text/javascript" src="link/link-groups/link-groups.js"></script>
+<script type="text/javascript" src="version/version.js"></script>
+<script type="text/javascript" src="portal/portal.js"></script>
+<script type="text/javascript" src="group/add-group/add-group.js"></script>
+<script type="text/javascript" src="group/edit-group/edit-group.js"></script>
+<script type="text/javascript" src="group/group-service.js"></script>
+<!--//TODO: gerar isso dinamicamente-->
+<script type="text/javascript" src="link/add-link/add-link.js"></script>
+<script type="text/javascript" src="link/edit-link/edit-link.js"></script>
+
+</html>

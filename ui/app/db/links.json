@@ -1,0 +1,14 @@
+{
+  "OKTOPUS": {
+    "GENERAL": {
+      "roles": [
+        "Authenticated"
+      ],
+      "folder": "DUMMY",
+      "links": [],
+      "title": "General",
+      "icon": "account_balance_wallet",
+      "index": 0
+    }
+  }
+}

@@ -1,0 +1,71 @@
+<md-content data-ng-init="ctrl.getAllRoles()" layout="row" layout-align="space-around" layout-padding="layout-padding"
+ng-cloak="" class="login-form">
+<md-card flex="flex">
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2><span class="title-header">Grupo</span></h2>
+    </div>
+  </md-toolbar>
+  <md-card-content>
+    <form name="Form">
+
+      <md-input-container class="md-block">
+        <label>Título</label>
+        <input type="text" name="title" ng-model="groupEditForm.title" placeholder="título" required />
+      </md-input-container>
+
+
+      <md-autocomplete 
+        md-no-cache="ctrl.noCache" 
+        md-selected-item="ctrl.selectedIcon" 
+        md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
+        md-search-text="ctrl.searchText" 
+        md-selected-item-change="groupEditForm.icon = ctrl.selectedIcon.icon" 
+        md-items="item in ctrl.querySearch(ctrl.searchText)"
+        md-require-match 
+        required 
+        md-item-text="item.name" 
+        md-floating-label="Escolha um ícone" 
+        md-min-length="0" 
+        placeholder="Escolha um icone">
+          <md-item-template>
+            <span class="item-title">
+              <md-icon class="md-avatar-icon material-icons">{{item.icon}}</md-icon>
+              <span> {{item.name}} </span>
+            </span>
+            <span class="item-metadata">
+            </span>
+          </md-item-template>
+      </md-autocomplete>
+
+      <md-input-container class="md-block">
+        <label>Roles</label>
+        <md-select 
+            required 
+            ng-model="groupEditForm.roles" 
+            data-md-container-class="selectHeader" 
+            multiple>
+              <md-optgroup label="roles">
+                <md-option ng-value="role" ng-repeat="role in roles">{{role}}</md-option>
+              </md-optgroup>
+        </md-select>
+      </md-input-container>
+
+      </br>
+
+      <md-input-container class="md-block">
+        <label>Pasta do Pentaho</label>
+        <input type="text" name="title" ng-model="groupEditForm.folder" placeholder="pasta do pentaho" required />
+      </md-input-container>
+
+      <div layout="row" layout-align="end none">
+
+          <md-button ng-click="ctrl.cancel()">Cancelar</md-button>
+          <md-button ng-disabled="!Form.$valid" ng-click="ctrl.submitGroup()" class="md-raised md-primary">Salvar</md-button>
+
+      </div>
+
+    </form>
+  </md-card-content>
+</md-card>
+</md-content>

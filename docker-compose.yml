@@ -1,0 +1,8 @@
+version: '2'
+services:
+    oktopus:
+        image: oktopus/oktopus-pentaho:${tag}
+        container_name: oktopus
+        restart: always
+        ports:
+            - 8080:8080

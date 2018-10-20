@@ -1,0 +1,11 @@
+*.csv
+*.class
+azure-documentdb-java-master/target/classes/META-INF/MANIFEST.MF
+*.properties
+azure-documentdb-java-master/target/classes/META-INF/maven/com.microsoft.azure/azure-documentdb/pom.xml
+*.class
+.vscode/
+ui/package-lock\.json
+backend/etl/dw/twitter/S3Download/files/twitter/*.json
+backend/etl/dw/twitter/S3Download/files/twitter/*.zip
+backend/etl/staging/market/alerts/Rplots.pdf
