@@ -26,6 +26,7 @@ So far you'd need to `npm install` before building and spinning up a container. 
 ```bash
 cd ui
 npm install
+cd ..
 docker build -t oktopus/oktopus-pentaho:dev .
 docker-compose up -d
 ```
