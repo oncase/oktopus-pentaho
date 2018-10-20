@@ -43,19 +43,6 @@
 
 <body class="portal-body" layout="row" ng-controller="PortalController as portalCtrl" keypress-events>
 
-  
-  <!-- Hotjar Tracking Code for http://nzn.onca.se:8080/pentaho/login -->
-  <script>
-    (function(h,o,t,j,a,r){
-        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-        h._hjSettings={hjid:816924,hjsv:6};
-        a=o.getElementsByTagName('head')[0];
-        r=o.createElement('script');r.async=1;
-        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-        a.appendChild(r);
-    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
-  </script>
-
   <!--SIDENAV-->
   <md-sidenav ng-show="showSidebar" class="site-sidenav " hide-print md-component-id="left" tabindex="-1" md-whiteframe="4"
     hide-print md-is-locked-open="$mdMedia('min-width: 333px')" ng-cloak>
@@ -150,7 +137,7 @@
       <div layout="row" flex="noshrink" layout-align="center center" class="layout-align-center-center layout-row flex-noshrink">
         <div flex="" class="ng-binding flex license-footer">
           Oktopus
-          <version-label></version-label> - Powered by NZN/ONCASE
+          <version-label></version-label> - Powered by oncase.com.br
         </div>
       </div>
     </md-content>

@@ -35,6 +35,14 @@ You must observe what's inside of your `.env` file. That will tell docker-compos
 
 URL: `http://localhost:8080/pentaho/content/oktopus/ui/index.html`
 
+<img src="docs/img/intro.png" alt="Intro" width="100%" />
+
+
+<img src="docs/img/content.png" alt="Intro" width="100%" />
+
+
+<img src="docs/img/access-control.png" alt="Intro" width="100%" />
+
 Some features:
 
 * Edit/view mode - you can enable/disable editing mode
