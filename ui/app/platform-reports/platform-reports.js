@@ -116,7 +116,7 @@ angular
       function _fetchLinksfromJson() {
         var endpointUrl =
           config.BASE_URL +
-          "/content/oktopus/ui/db/" +
+          "content/oktopus/ui/db/" +
           $window._linksPath +
           ".json";
         return $http.get(endpointUrl);
